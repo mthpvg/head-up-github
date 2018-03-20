@@ -1,16 +1,28 @@
 {
-  "name": "Head-up Github",
-  "description" : "To use, type 'g' plus a search term into the Omnibox.",
-  "version": "1.1",
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+  "name": "Hello Extensions",
+  "description" : "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "hello_extensions.png"
   },
   "permissions": [
     "history",
     "bookmarks",
     "tabs"
   ],
-  "omnibox": { "keyword" : "g" },
-  "manifest_version": 2
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": false
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Opens hello.html"
+    }
+  }
+
 }
