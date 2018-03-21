@@ -1,7 +1,7 @@
 console.log('eventPage');
 
 const microsecondsPerMonth = 1000 * 60 * 60 * 24 * 7 * 4;
-const oneMonthAgo = (new Date).getTime() - microsecondsPerMonth;
+const sixMonthsAgo = (new Date).getTime() - 6 * microsecondsPerMonth;
 const domain = 'https://github.com';
 let historyItems;
 
@@ -14,7 +14,7 @@ function getHistory(callback) {
   chrome.history.search(
     {
       'text': domain,
-      'startTime': oneMonthAgo,
+      'startTime': sixMonthsAgo,
       'maxResults': 200
     },
     function(items) {
@@ -30,4 +30,19 @@ function getHistory(callback) {
       return callback(historyItems);
     }
   );
+}
+
+function getBookmarks(callback) {
+  chrome.bookmarks.search(domain, function(items) {
+    bookmarkItems = items
+      .filter((item) => item.url.includes(domain))
+      .map((item) => {
+      return {
+        url: item.url.split(domain)[1],
+        lastVisitTime: item.dateAdded,
+        typedCount: 100
+      }
+    });
+    callback(bookmarkItems)
+  });
 }
